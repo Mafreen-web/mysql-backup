@@ -1,0 +1,6 @@
+text
+# Ignore configuration files with credentials
+config.cfg
+
+# Ignore backup files
+*.sql.gz
