@@ -1,0 +1,14 @@
+#### `check_replication.sh`
+```bash
+#!/bin/bash
+source config.cfg
+
+REPL_STATUS=$(mysql -h $SLAVE_HOST -u $DB_USER -p$DB_PASS -e "SHOW SLAVE STATUS\G")
+
+if [[ $REPL_STATUS == *"Running"* ]]; then
+    echo "Replication OK"
+else
+    echo "Replication ERROR"
+    echo "$REPL_STATUS" | grep "Last_Error"
+    # Add email/pager duty alert here
+fi
