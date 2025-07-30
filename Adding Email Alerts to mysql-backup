@@ -1,0 +1,21 @@
+Update your mysql_backup.sh with this email function:
+
+bash
+#!/bin/bash
+# ... (previous code remains)
+
+send_email() {
+    local subject=$1
+    local body=$2
+    echo "$body" | mailx -s "$subject" "$EMAIL_TO"
+}
+
+# After backup verification
+if [ -f "$BACKUP_FILE" ]; then
+    echo "Backup successful: $BACKUP_FILE"
+    send_email "MySQL Backup Success" "Backup completed successfully at $(date)"
+else
+    echo "Backup failed!" >&2
+    send_email "MySQL Backup FAILED" "Backup failed on $(date). Check logs immediately."
+    exit 1
+fi
